@@ -1,8 +1,9 @@
-import { Chart, CountryPicker, Stats } from "./components";
+import { Stats, CountryPicker, Chart } from "./components";
 import styles from "./App.module.css";
 import { fetchGlobalData } from "./api";
 import { useEffect, useState } from "react";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, Typography } from "@material-ui/core";
+import Logo from "./assets/virus.svg";
 
 function App() {
     const [data, setData] = useState({});
@@ -11,8 +12,10 @@ function App() {
     const getGlobalData = async () => {
         const globalData = await fetchGlobalData();
 
-        setData(globalData);
-        globalData && setIsLoading(false);
+        if (globalData) {
+            setData(globalData);
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -25,6 +28,13 @@ function App() {
                 <LinearProgress />
             ) : (
                 <div className={styles.container}>
+                    <div className={styles.title}>
+                        <img src={Logo} />
+                        <Typography variant="h3">Covid-19 Tracker</Typography>
+                    </div>
+                    <Typography variant="h5" color="textSecondary">
+                        {new Date(data.lastReported).toDateString()}
+                    </Typography>
                     <Stats data={data} />
                     <CountryPicker />
                     <Chart />

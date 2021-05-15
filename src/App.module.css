@@ -4,3 +4,15 @@
     align-items: center;
     flex-direction: column;
 }
+
+.title {
+    margin-top: 2rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title > img {
+    height: 4.5rem;
+    margin-right: 0.5rem;
+}

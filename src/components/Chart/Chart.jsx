@@ -1,36 +1,52 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Chart.module.css";
-import { fetchDailyData } from "../../api";
+import { fetchGlobalStatistic } from "../../api";
 import { Line, Bar } from "react-chartjs-2";
 import { CircularProgress } from "@material-ui/core";
 
 const Chart = () => {
-    const [dailyData, setDailyData] = useState([]);
+    const [statisticData, setStatisticData] = useState([]);
     const [chartLoading, setChartLoading] = useState(true);
 
-    const chart = chartLoading ? (
+    const lineChart = chartLoading ? (
         <CircularProgress />
     ) : (
         <Line
             data={{
-                label: "",
-                datasets: [{}, {}],
+                labels: dailyData.map(({ reportDate }) => reportDate),
+                datasets: [
+                    {
+                        data: dailyData.map(({ confirmed }) => confirmed.total),
+                        label: "Infected",
+                        fill: true,
+                        borderColor: "#3f51b5",
+                    },
+                    {
+                        data: dailyData.map(({ deaths }) => deaths.total),
+                        label: "Deaths",
+                        fill: true,
+                        borderColor: "#f44336",
+                        backgroundColor: "rgba(255, 0, 0, 0.3)",
+                    },
+                ],
             }}
         />
     );
 
-    const getDailyData = async () => {
-        const fetchedDailyData = await fetchDailyData();
+    const getGlobalStatistic = async () => {
+        const fetchedGlobalStatistic = await fetchGlobalStatistic();
 
-        setDailyData(fetchedDailyData);
-        fetchedDailyData && setChartLoading(false);
+        if (fetchedGlobalStatistic && fetchedGlobalStatistic.length) {
+            // setStatisticData(fetchedGlobalStatistic);
+            setChartLoading(false);
+        }
     };
 
     useEffect(() => {
-        getDailyData();
-    }, [dailyData]);
+        getGlobalStatistic();
+    }, []);
 
-    return <div>Chart</div>;
+    return <div className={styles.container}></div>;
 };
 
 export default Chart;

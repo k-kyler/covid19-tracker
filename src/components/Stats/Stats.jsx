@@ -20,18 +20,19 @@ const Stats = ({ data }) => {
                             Infected
                         </Typography>
                         <Typography variant="h5">
-                            <CountUp
-                                start={0}
-                                end={data.confirmed.value}
-                                separator=","
-                                duration={2}
-                            />
-                        </Typography>
-                        <Typography color="textSecondary">
-                            {new Date(data.lastUpdate).toDateString()}
+                            {data.confirmed ? (
+                                <CountUp
+                                    start={0}
+                                    end={data.confirmed}
+                                    separator=","
+                                    duration={2}
+                                />
+                            ) : (
+                                "-"
+                            )}
                         </Typography>
                         <Typography variant="body2">
-                            Number of new cases of Covid-19
+                            Number of active cases of Covid-19
                         </Typography>
                     </CardContent>
                 </Grid>
@@ -48,15 +49,16 @@ const Stats = ({ data }) => {
                             Recovered
                         </Typography>
                         <Typography variant="h5">
-                            <CountUp
-                                start={0}
-                                end={data.recovered.value}
-                                separator=","
-                                duration={2}
-                            />
-                        </Typography>
-                        <Typography color="textSecondary">
-                            {new Date(data.lastUpdate).toDateString()}
+                            {data.recovered ? (
+                                <CountUp
+                                    start={0}
+                                    end={data.recovered}
+                                    separator=","
+                                    duration={2}
+                                />
+                            ) : (
+                                "-"
+                            )}
                         </Typography>
                         <Typography variant="body2">
                             Number of recoveries from Covid-19
@@ -76,15 +78,16 @@ const Stats = ({ data }) => {
                             Deaths
                         </Typography>
                         <Typography variant="h5">
-                            <CountUp
-                                start={0}
-                                end={data.deaths.value}
-                                separator=","
-                                duration={2}
-                            />
-                        </Typography>
-                        <Typography color="textSecondary">
-                            {new Date(data.lastUpdate).toDateString()}
+                            {data.deaths ? (
+                                <CountUp
+                                    start={0}
+                                    end={data.deaths}
+                                    separator=","
+                                    duration={2}
+                                />
+                            ) : (
+                                "-"
+                            )}
                         </Typography>
                         <Typography variant="body2">
                             Number of deaths caused by Covid-19
