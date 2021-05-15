@@ -1,0 +1,19 @@
+.container {
+    margin: 3rem 0;
+}
+
+.stat {
+    margin: 0 1rem !important;
+}
+
+.infected {
+    border-bottom: 5px solid #3f51b5;
+}
+
+.recoveries {
+    border-bottom: 5px solid #2ef41f;
+}
+
+.deaths {
+    border-bottom: 5px solid #f44336;
+}
