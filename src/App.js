@@ -12,8 +12,9 @@ import Logo from "./assets/virus.svg";
 function App() {
     const [data, setData] = useState({});
     const [dailyData, setDailyData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [region, setRegion] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [onChangeLoading, setOnChangeLoading] = useState(false);
 
     const getGlobalData = async () => {
         const globalData = await fetchGlobalData();
@@ -31,16 +32,18 @@ function App() {
             setDailyData(globalDailyData);
     };
 
-    const getRegionDailyData = async (re) => {
+    const getRegionDataAndDailyData = async (re) => {
         const { daily, total_cases, recovered, deaths, date } =
             await fetchRegionDailyData(re);
 
         if (daily && daily.length) setDailyData(daily);
         setData({ total_cases, recovered, deaths, date });
+        if (data && daily) setOnChangeLoading(false);
     };
 
     const onChangeRegionHandler = (re) => {
         setRegion(re);
+        setOnChangeLoading(true);
     };
 
     useEffect(() => {
@@ -49,7 +52,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if (region) getRegionDailyData(region);
+        if (region) getRegionDataAndDailyData(region);
     }, [region]);
 
     return (
@@ -57,20 +60,29 @@ function App() {
             {isLoading ? (
                 <LinearProgress className={styles.pageLoading} />
             ) : (
-                <div className={styles.container}>
-                    <div className={styles.title}>
-                        <img src={Logo} />
-                        <Typography variant="h3">Covid-19 Tracker</Typography>
+                <>
+                    {onChangeLoading && (
+                        <LinearProgress className={styles.pageLoading} />
+                    )}
+
+                    <div className={styles.container}>
+                        <div className={styles.title}>
+                            <img src={Logo} />
+                            <Typography variant="h3">
+                                Covid-19 Tracker
+                            </Typography>
+                        </div>
+                        <Typography variant="h5" color="textSecondary">
+                            {new Date(data.date).toDateString()}
+                        </Typography>
+
+                        <Stats data={data} />
+                        <CountryPicker
+                            onChangeRegionHandler={onChangeRegionHandler}
+                        />
+                        <Chart data={data} dailyData={dailyData} />
                     </div>
-                    <Typography variant="h5" color="textSecondary">
-                        {new Date(data.date).toDateString()}
-                    </Typography>
-                    <Stats data={data} />
-                    <CountryPicker
-                        onChangeRegionHandler={onChangeRegionHandler}
-                    />
-                    <Chart data={data} dailyData={dailyData} />
-                </div>
+                </>
             )}
         </>
     );
