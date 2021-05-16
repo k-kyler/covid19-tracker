@@ -22,6 +22,7 @@ function App() {
         if (globalData) {
             setData(globalData);
             setIsLoading(false);
+            setOnChangeLoading(false);
         }
     };
 
@@ -53,6 +54,10 @@ function App() {
 
     useEffect(() => {
         if (region) getRegionDataAndDailyData(region);
+        if (!region) {
+            getGlobalData();
+            getGlobalDailyData();
+        }
     }, [region]);
 
     return (
