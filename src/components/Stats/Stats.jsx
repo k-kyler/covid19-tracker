@@ -20,10 +20,10 @@ const Stats = ({ data }) => {
                             Infected
                         </Typography>
                         <Typography variant="h5">
-                            {data.confirmed ? (
+                            {data.total_cases ? (
                                 <CountUp
                                     start={0}
-                                    end={data.confirmed}
+                                    end={data.total_cases}
                                     separator=","
                                     duration={2}
                                 />
@@ -32,7 +32,7 @@ const Stats = ({ data }) => {
                             )}
                         </Typography>
                         <Typography variant="body2">
-                            Number of active cases of Covid-19
+                            Number of infected cases of Covid-19
                         </Typography>
                     </CardContent>
                 </Grid>

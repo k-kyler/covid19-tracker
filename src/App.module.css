@@ -16,3 +16,7 @@
     height: 4.5rem;
     margin-right: 0.5rem;
 }
+
+.pageLoading {
+    height: 0.4rem !important;
+}

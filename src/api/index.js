@@ -1,90 +1,121 @@
 import axios from "axios";
 
-// const URL = "https://covid19.mathdro.id/api";
-const URL = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1";
+const URL = "https://coronavirus-map.p.rapidapi.com/v1";
 
 export const fetchGlobalData = async () => {
     try {
-        // const {
-        //     data: { confirmed, deaths, recovered, lastUpdate },
-        // } = await axios.get(URL);
-
-        // return {
-        //     confirmed,
-        //     deaths,
-        //     recovered,
-        //     lastUpdate,
-        // };
-
         const {
-            data: {
-                data: { confirmed, deaths, recovered, lastReported },
-            },
-        } = await axios.get(`${URL}/total`, {
+            data: { data },
+        } = await axios.get(`${URL}/spots/summary`, {
             headers: {
                 "x-rapidapi-key": process.env.REACT_APP_API_KEY,
                 "x-rapidapi-host": process.env.REACT_APP_API_HOST,
             },
         });
+        const modifiedGlobalData = Object.entries(data).map(
+            ([date, detail]) => ({
+                date,
+                detail,
+            })
+        );
+        const {
+            date,
+            detail: { total_cases, recovered, deaths },
+        } = modifiedGlobalData[0];
 
         return {
-            confirmed,
+            total_cases,
             deaths,
             recovered,
-            lastReported,
+            date,
         };
     } catch (error) {
         console.error(error);
     }
 };
 
-export const fetchGlobalStatistic = async () => {
+export const fetchRegions = async () => {
     try {
-        // const { data } = await axios.get(`${URL}/daily`);
-
-        // return data;
-
         const {
             data: {
-                data: { covid19Stats },
+                data: { regions },
             },
-        } = await axios.get(`${URL}/stats`, {
+        } = await axios.get(`${URL}/summary/latest`, {
             headers: {
                 "x-rapidapi-key": process.env.REACT_APP_API_KEY,
                 "x-rapidapi-host": process.env.REACT_APP_API_HOST,
             },
         });
+        const modifiedRegions = Object.entries(regions)
+            .map(([key, detail]) => ({ key, detail }))
+            .map(({ detail: { name } }) => ({ name }));
 
-        console.log(covid19Stats);
+        return modifiedRegions;
     } catch (error) {
         console.error(error);
     }
 };
 
-export const fetchCountries = async () => {
+export const fetchGlobalDailyData = async () => {
     try {
-        // const { data } = await axios.get(`${URL}/countries`);
-
-        // return data;
-
         const {
-            data: {
-                data: { covid19Stats },
-            },
-        } = await axios.get(`${URL}/stats`, {
+            data: { data },
+        } = await axios.get(`${URL}/spots/summary`, {
             headers: {
                 "x-rapidapi-key": process.env.REACT_APP_API_KEY,
                 "x-rapidapi-host": process.env.REACT_APP_API_HOST,
             },
         });
-
-        return covid19Stats.reduce(
-            (accumulator, { country }) =>
-                accumulator.includes(country)
-                    ? accumulator
-                    : [...accumulator, country],
-            []
+        const modifiedGlobalDailyData = Object.entries(data).map(
+            ([date, detail]) => ({
+                date,
+                detail,
+            })
         );
+
+        return modifiedGlobalDailyData.reverse();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const fetchRegionDailyData = async (region) => {
+    try {
+        const {
+            data: { data },
+        } = await axios.get(`${URL}/spots/year`, {
+            headers: {
+                "x-rapidapi-key": process.env.REACT_APP_API_KEY,
+                "x-rapidapi-host": process.env.REACT_APP_API_HOST,
+            },
+            params: {
+                region: region,
+            },
+        });
+        const modifiedRegionData = Object.entries(data).map(
+            ([date, detail]) => ({
+                date,
+                detail,
+            })
+        );
+        const {
+            date,
+            detail: { total_cases, recovered, deaths },
+        } = modifiedRegionData[0];
+        const modifiedRegionDailyData = Object.entries(data).map(
+            ([date, detail]) => ({
+                date,
+                detail,
+            })
+        );
+
+        return {
+            total_cases,
+            recovered,
+            deaths,
+            date,
+            daily: modifiedRegionDailyData.reverse(),
+        };
     } catch (error) {
         console.error(error);
     }
