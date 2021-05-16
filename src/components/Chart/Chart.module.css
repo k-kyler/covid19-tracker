@@ -4,3 +4,9 @@
     width: 85%;
     margin-bottom: 2rem;
 }
+
+@media (max-width: 770px) {
+    .container {
+        width: 100%;
+    }
+}

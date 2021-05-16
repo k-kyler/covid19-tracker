@@ -1,12 +1,18 @@
 import React from "react";
 import styles from "./Stats.module.css";
-import { Typography, Card, CardContent, Grid } from "@material-ui/core";
+import {
+    Typography,
+    Card,
+    CardContent,
+    Grid,
+    Container,
+} from "@material-ui/core";
 import CountUp from "react-countup";
 import classNames from "classnames";
 
 const Stats = ({ data }) => {
     return (
-        <div className={styles.container}>
+        <Container className={styles.container}>
             <Grid container spacing={3} justify="center">
                 <Grid
                     item
@@ -95,7 +101,7 @@ const Stats = ({ data }) => {
                     </CardContent>
                 </Grid>
             </Grid>
-        </div>
+        </Container>
     );
 };
 

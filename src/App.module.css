@@ -20,3 +20,18 @@
 .pageLoading {
     height: 0.4rem !important;
 }
+
+@media (max-width: 770px) {
+    .title {
+        flex-direction: column;
+    }
+
+    .title > img {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .title > h3 {
+        margin-bottom: 0.5rem;
+    }
+}
