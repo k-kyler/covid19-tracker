@@ -1,6 +1,6 @@
 # Covid-19 Tracker App
 
-This project was built with React.js, Material UI, Chart.js and Coronavirus Map API (https://rapidapi.com/Yatko/api/coronavirus-map)
+This project is using Coronavirus Map API (https://rapidapi.com/Yatko/api/coronavirus-map)
 
 ## Available Scripts
 
