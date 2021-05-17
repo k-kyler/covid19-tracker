@@ -1,6 +1,6 @@
 # Covid-19 Tracker App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was built with React.js, Material UI, Chart.js and Coronavirus Map API (https://rapidapi.com/Yatko/api/coronavirus-map)
 
 ## Available Scripts
 
