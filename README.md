@@ -1,6 +1,6 @@
 # Covid-19 Tracker App
 
-This project is using Coronavirus Map API (https://rapidapi.com/Yatko/api/coronavirus-map)
+A tracker app that simply tracking the information of Covid-19 victims in worldwide and countries. All the information about infected, deaths and recovers are described through charts. In this project, I have been using Coronavirus Map API[https://rapidapi.com/Yatko/api/coronavirus-map] for building features.
 
 ## Available Scripts
 
